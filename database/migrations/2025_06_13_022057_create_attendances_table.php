@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('attendances', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->date('request_date')->nullable(false);
             $table->string('name', 100)->nullable(false);
             $table->string('requester_name', 100)->nullable(true);

@@ -47,9 +47,6 @@ class AttendanceController extends Controller
         return sprintf('ATD-%s-%05d', $data, $contador);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
 
