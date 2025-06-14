@@ -10,4 +10,11 @@ export default defineConfig({
         }),
         react(),
     ],
+    watch: {
+        usePolling: true,
+        origin: 'http://localhost'
+    },
+    server: {
+        hmr: 'localhost'
+    }
 });

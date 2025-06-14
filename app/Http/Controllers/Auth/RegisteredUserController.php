@@ -20,7 +20,10 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Auth/Register');
+        return Inertia::render('Auth/Register', [
+            'status' => session('status'),
+            'errors' => session('errors') ? session('errors')->getBag('default')->getMessages() : [],
+        ]);
     }
 
     /**
@@ -30,11 +33,32 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
+        $rules = [
+            'name' => 'required|string|min:5|max:255',
+            'email' => 'required|string|email|min:15|max:255|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        ];
+
+        $feedbacks = [
+
+            'name.required' => 'O nome é obrigatório. ',
+            'name.string' => 'O nome deve ser uma string válida. ',
+            'name.min' => 'O nome deve conter pelo menos 5 caracteres. ',
+            'name.max' => 'O nome não pode exceder 255 caracteres. ',
+
+            'email.required' => 'O e-mail é obrigatório.',
+            'email.string' => 'O e-mail deve ser uma string válida. ',
+            'email.email' => 'O formato do e-mail é inválido. ',
+            'email.min' => 'O e-mail deve conter pelo menos 15 caracteres. ',
+            'email.max' => 'O e-mail não pode exceder 255 caracteres. ',
+            'email.unique' => 'Este e-mail já está cadastrado. ',
+
+            'password.required' => 'A senha é obrigatória.',
+            'password.confirmed' => 'As senhas não conferem. ',
+            'password.min' => 'A senha deve conter pelo menos 8 caracteres. ',
+        ];
+
+        $request->validate($rules, $feedbacks);
 
         $user = User::create([
             'name' => $request->name,
@@ -48,4 +72,6 @@ class RegisteredUserController extends Controller
 
         return redirect(route('dashboard', absolute: false));
     }
+
+
 }

@@ -60,6 +60,7 @@ export default function Login({
                         autoComplete="username"
                         isFocused={true}
                         onChange={(e) => setData('email', e.target.value)}
+                        required
                     />
 
                     <InputError message={errors.email} className="mt-2" />
@@ -78,6 +79,7 @@ export default function Login({
                         className="mt-1 block w-full"
                         autoComplete="current-password"
                         onChange={(e) => setData('password', e.target.value)}
+                        required
                     />
 
                     <InputError message={errors.password} className="mt-2" />
