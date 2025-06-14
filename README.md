@@ -74,6 +74,7 @@ sail npm run dev
 ```
 
 ### OBS: No caso de algum erro de versão
+
 ```bash
 sail npm i
 ```
