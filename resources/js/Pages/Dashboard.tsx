@@ -1,6 +1,11 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import AttendanceTable from '@/Components/AttendanceTable';
+import { useState, useEffect } from 'react';
+
+interface PageProps {
+    attendances: Attendance[];
+}
 
 interface User {
     id: number;
@@ -9,7 +14,7 @@ interface User {
 }
 
 interface Attendance {
-    id: number;
+    id: string;
     request_date: string;
     name: string;
     requester_name: string;
@@ -25,6 +30,10 @@ interface Props {
 }
 
 export default function Dashboard({ user, attendances }: Props) {
+
+    console.log(user);
+    console.log(attendances);
+
     return (
         <AuthenticatedLayout
             header={
@@ -38,7 +47,6 @@ export default function Dashboard({ user, attendances }: Props) {
                     >
                         Novo Atendimento
                     </Link>
-
                 </div>}
             user={user}
         >

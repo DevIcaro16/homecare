@@ -5,10 +5,21 @@ import DeleteUserForm from './Partials/DeleteUserForm';
 import UpdatePasswordForm from './Partials/UpdatePasswordForm';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
 
+interface Props {
+    mustVerifyEmail: boolean;
+    status?: string;
+    user: {
+        id: number;
+        name: string;
+        email: string;
+    };
+}
+
 export default function Edit({
     mustVerifyEmail,
     status,
-}: PageProps<{ mustVerifyEmail: boolean; status?: string }>) {
+    user
+}: Props) {
     return (
         <AuthenticatedLayout
             header={
@@ -16,6 +27,7 @@ export default function Edit({
                     Perfil
                 </h2>
             }
+            user={user}
         >
             <Head title="Perfil" />
 

@@ -21,8 +21,13 @@ export default function Authenticated({
     children,
     user,
 }: Props) {
+
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
+
+    if (!user) {
+        return <div>Carregando usuário...</div>;
+    }
 
     return (
         <div className="min-h-screen bg-gray-100">

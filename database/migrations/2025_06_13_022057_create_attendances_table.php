@@ -19,10 +19,9 @@ return new class extends Migration {
                 'priority_level',
                 ['01', '02', '03', '04']
             )->nullable(false)
-                ->comment('01: Low, 02: Medium, 03: High, 04: Urgent');
+                ->comment('01: Baixo, 02: Médio, 03: Alto, 04: Urgente');
             $table->string('phone', 11)->nullable(false)->comment('Format: DDD + number (ex: 11999999999)');
 
-            // Address fields
             // $table->string('street', 100)->nullable(false);
             // $table->string('number', 10)->nullable(false);
             // $table->string('complement', 50)->nullable(true);

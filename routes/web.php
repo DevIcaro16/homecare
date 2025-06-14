@@ -17,11 +17,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard', [
-            'user' => auth()->user(),
-        ]);
-    })->name('dashboard');
+    Route::get('/dashboard', [AttendanceController::class, 'index'])->name('dashboard');
 
     Route::get('/createAttendance', function () {
         return Inertia::render('CreateAttendance', [
@@ -32,6 +28,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::patch('/attendance/{id}', [AttendanceController::class, 'update'])->name('attendances.update');
+
+    Route::delete('/attendance/{id}', [AttendanceController::class, 'destroy'])->name('attendance.destroy');
 
 });
 

@@ -1,5 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import InputMask from 'react-input-mask';
+import InputDate from './InputDate';
+import InputText from './InputText';
+import InputSelect from './InputSelect';
+import ButtonForm from './ButtonForm';
 
 interface Props {
     onSubmit: (data: AttendanceFormData) => void;
@@ -12,6 +17,7 @@ interface AttendanceFormData {
     priority_level: '01' | '02' | '03' | '04';
     phone: string;
     address: string;
+    [key: string]: string;
 }
 
 const priorityOptions = [
@@ -22,7 +28,10 @@ const priorityOptions = [
 ];
 
 export default function AttendanceForm({ onSubmit }: Props) {
-    const [timeLeft, setTimeLeft] = useState(120); // 2 minutes in seconds
+
+    const { register } = useForm();
+
+    const [timeLeft, setTimeLeft] = useState(120);
     const [formData, setFormData] = useState<AttendanceFormData>({
         request_date: new Date().toISOString().split('T')[0],
         name: '',
@@ -68,121 +77,62 @@ export default function AttendanceForm({ onSubmit }: Props) {
 
     return (
         <div className="bg-white shadow-sm rounded-lg p-6">
-            {/* Timer Section */}
             <div className="mb-6 text-center">
                 <div className="text-2xl font-bold text-gray-800">
                     Tempo: {formatTime(timeLeft)}
                 </div>
             </div>
 
-            {/* Form Section */}
             <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label htmlFor="request_date" className="block text-sm font-medium text-gray-700">
-                            Data do Atendimento
-                        </label>
-                        <input
-                            type="date"
-                            id="request_date"
-                            name="request_date"
-                            value={formData.request_date}
-                            onChange={handleChange}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                            required
-                        />
-                    </div>
+                    <InputDate
+                        labelMessage='Data do Atendimento'
+                        request_date={formData.request_date}
+                        handleChange={handleChange}
+                    />
 
-                    <div>
-                        <label htmlFor="priority_level" className="block text-sm font-medium text-gray-700">
-                            Nível de Prioridade
-                        </label>
-                        <select
-                            id="priority_level"
-                            name="priority_level"
-                            value={formData.priority_level}
-                            onChange={handleChange}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                            required
-                        >
-                            {priorityOptions.map(option => (
-                                <option key={option.value} value={option.value}>
-                                    {option.label}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+                    <InputSelect
+                        labelMessage='Nível de Prioridade'
+                        name="priority_level"
+                        value={formData.priority_level}
+                        handleChange={handleChange}
+                        options={priorityOptions}
+                    />
 
-                    <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                            Nome do Paciente
-                        </label>
-                        <input
-                            type="text"
-                            id="name"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                            required
-                        />
-                    </div>
+                    <InputText
+                        labelMessage='Nome do Paciente'
+                        name="name"
+                        value={formData.name}
+                        handleChange={handleChange}
+                    />
 
-                    <div>
-                        <label htmlFor="requester_name" className="block text-sm font-medium text-gray-700">
-                            Nome do Solicitante
-                        </label>
-                        <input
-                            type="text"
-                            id="requester_name"
-                            name="requester_name"
-                            value={formData.requester_name}
-                            onChange={handleChange}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                            required
-                        />
-                    </div>
+                    <InputText
+                        labelMessage='Nome do Solicitante'
+                        name="requester_name"
+                        value={formData.requester_name}
+                        handleChange={handleChange}
+                    />
 
-                    <div>
-                        <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-                            Telefone
-                        </label>
-                        <input
-                            type="tel"
-                            id="phone"
-                            name="phone"
-                            value={formData.phone}
-                            onChange={handleChange}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                            required
-                        />
+                    <InputText
+                        labelMessage='Telefone'
+                        name="phone"
+                        value={formData.phone}
+                        handleChange={handleChange}
+                        type="tel"
+                    />
 
-                    </div>
-
-                    <div className="">
-                        <label htmlFor="address" className="block text-sm font-medium text-gray-700">
-                            Endereço
-                        </label>
-                        <input
-                            type="text"
-                            id="address"
-                            name="address"
-                            value={formData.address}
-                            onChange={handleChange}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                            required
-                        />
-                    </div>
-
+                    <InputText
+                        labelMessage='Endereço'
+                        name="address"
+                        value={formData.address}
+                        handleChange={handleChange}
+                    />
                 </div>
 
                 <div className="flex justify-end">
-                    <button
-                        type="submit"
-                        className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                    >
-                        Criar Atendimento
-                    </button>
+                    <ButtonForm
+                        message='Criar Atendimento'
+                    />
                 </div>
             </form>
         </div>

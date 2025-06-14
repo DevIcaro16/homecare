@@ -15,6 +15,7 @@ interface AttendanceFormData {
     priority_level: '01' | '02' | '03' | '04';
     phone: string;
     address: string;
+    [key: string]: string;
 }
 
 interface Props {
@@ -22,6 +23,7 @@ interface Props {
 }
 
 export default function CreateAttendance({ user }: Props) {
+
     const handleSubmit = (data: AttendanceFormData) => {
         router.post(route('attendances.store'), data);
     };
@@ -33,12 +35,6 @@ export default function CreateAttendance({ user }: Props) {
                     <h2 className="text-xl font-semibold leading-tight text-gray-800">
                         Criação de Atendimento
                     </h2>
-                    {/* <Link
-                        href={route('dashboard')}
-                        className="rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    >
-                        Painel
-                    </Link> */}
                 </div>
             }
             user={user}
