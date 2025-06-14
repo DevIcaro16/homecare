@@ -24,7 +24,7 @@ Aplicação monolítica construída com **Laravel** (Backend) e **React** com **
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/homecare.git
+git clone https://github.com/DevIcaro16/homecare.git
 cd homecare
 ```
 
