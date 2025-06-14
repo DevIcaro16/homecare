@@ -10,9 +10,12 @@ interface InputSelectProps {
     options: Option[];
     required?: boolean;
     register: UseFormRegisterReturn;
+    placeholder?: string;
 }
 
-const InputSelect = ({ labelMessage, options, required = true, register }: InputSelectProps) => {
+const InputSelect = ({ labelMessage, options, register, placeholder }: InputSelectProps) => {
+    const defaultPlaceholder = `Selecione ${labelMessage.toLowerCase()}`;
+
     return (
         <div>
             <label htmlFor={register.name} className="block text-sm font-medium text-gray-700">
@@ -23,6 +26,7 @@ const InputSelect = ({ labelMessage, options, required = true, register }: Input
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                 {...register}
             >
+                <option value="" disabled>{placeholder || defaultPlaceholder}</option>
                 {options.map(option => (
                     <option key={option.value} value={option.value}>
                         {option.label}

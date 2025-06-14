@@ -37,28 +37,28 @@ class SendMessageController extends Controller
         ], 500);
     }
 
-    public function sendTemplate(Request $request)
-    {
-        $request->validate([
-            'phone' => 'required|string',
-            'template' => 'required|string',
-            'components' => 'array'
-        ]);
+    // public function sendTemplate(Request $request)
+    // {
+    //     $request->validate([
+    //         'phone' => 'required|string',
+    //         'template' => 'required|string',
+    //         'components' => 'array'
+    //     ]);
 
-        $success = $this->sendMessage->sendTemplate(
-            $request->phone,
-            $request->template,
-            $request->components ?? []
-        );
+    //     $success = $this->sendMessage->sendTemplate(
+    //         $request->phone,
+    //         $request->template,
+    //         $request->components ?? []
+    //     );
 
-        if ($success) {
-            return response()->json([
-                'message' => 'Template enviado com sucesso'
-            ], 201);
-        }
+    //     if ($success) {
+    //         return response()->json([
+    //             'message' => 'Template enviado com sucesso'
+    //         ], 201);
+    //     }
 
-        return response()->json([
-            'message' => 'Erro ao enviar template'
-        ], 500);
-    }
+    //     return response()->json([
+    //         'message' => 'Erro ao enviar template'
+    //     ], 500);
+    // }
 }

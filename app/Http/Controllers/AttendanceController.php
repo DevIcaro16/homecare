@@ -55,31 +55,8 @@ class AttendanceController extends Controller
 
         try {
 
-            $rules = [
-                'request_date' => 'required|date',
-                'name' => 'required|string|max:255',
-                'requester_name' => 'required|string|max:255',
-                'priority_level' => 'required|in:01,02,03,04',
-                'phone' => 'required|string|max:20',
-                'address' => 'required|string|max:255',
-            ];
 
-            $feedbacks = [
-                'request_date.required' => 'A data do atendimento é obrigatória',
-                'request_date.date' => 'A data do atendimento deve ser uma data válida',
-                'name.required' => 'O nome do paciente é obrigatório',
-                'name.max' => 'O nome do paciente não pode ter mais de 255 caracteres',
-                'requester_name.required' => 'O nome do solicitante é obrigatório',
-                'requester_name.max' => 'O nome do solicitante não pode ter mais de 255 caracteres',
-                'priority_level.required' => 'O nível de prioridade é obrigatório',
-                'priority_level.in' => 'O nível de prioridade deve ser válido',
-                'phone.required' => 'O telefone é obrigatório',
-                'phone.max' => 'O telefone não pode ter mais de 11 caracteres',
-                'address.required' => 'O endereço é obrigatório',
-                'address.max' => 'O endereço não pode ter mais de 255 caracteres',
-            ];
-
-            $request->validate($rules, $feedbacks);
+            $request->validate($this->attendance->rules(), $this->attendance->feedbacks());
 
             $attendance = new Attendance();
             $attendance->name = $request->name;
@@ -87,6 +64,7 @@ class AttendanceController extends Controller
             $attendance->address = $request->address;
             $attendance->priority_level = $request->priority_level;
             $attendance->requester_name = $request->requester_name;
+            $request->request_date = now()->toDateTimeString();
             $attendance->request_date = $request->request_date;
             $attendance->operator_id = auth()->id();
 

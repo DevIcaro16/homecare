@@ -36,7 +36,7 @@ class SendMessageJob implements ShouldQueue
     {
         $lastChar = substr($this->protocol, -1);
         $isSuccess = is_numeric($lastChar) && $lastChar % 2 === 0;
-        $formattedDate = Carbon::parse($this->requestDate)->format('d/m/Y H:i');
+        $formattedDate = Carbon::parse($this->requestDate)->format('d/m/Y H:i:s');
 
         if ($isSuccess) {
             $messageText = "Atendimento Realizado com Sucesso na HomeCare." . PHP_EOL;
